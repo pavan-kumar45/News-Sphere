@@ -1,38 +1,28 @@
-// import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
-
-import React, { Component, useState } from 'react'
 import Navbar from './components/Navbar';
 import News from './components/News';
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Switch,
   Route,
-
 } from "react-router-dom";
 import LoadingBar from 'react-top-loading-bar';
 
-//rafce
 const App = () => {
-
   const pageSize = 12;
-  const apiKey = process.env.REACT_APP_API_NEWS
+  const apiKey = process.env.REACT_APP_API_NEWS;
 
-  const [progress, setProgress] = useState(0)
-
-
+  const [progress, setProgress] = useState(0);
 
   return (
     <div>
-
       <Router>
         <Navbar />
         <LoadingBar
           color='#f11946'
           progress={progress}
-
         />
-
         <Switch>
           <Route exact path="/" key="/"><News setProgress={setProgress} apiKey={apiKey} pageSize={pageSize} country="in" category="general" /></Route>
           <Route exact path="/about" key="general"><News setProgress={setProgress} apiKey={apiKey} pageSize={pageSize} country="in" category="general" /></Route>
@@ -44,10 +34,8 @@ const App = () => {
           <Route exact path="/science" key="science"><News setProgress={setProgress} apiKey={apiKey} pageSize={pageSize} country="in" category="science" /></Route>
         </Switch>
       </Router>
-
     </div>
-  )
-
+  );
 };
-export default App;
 
+export default App;
