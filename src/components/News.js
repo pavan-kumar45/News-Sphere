@@ -17,19 +17,25 @@ const News = (props) => {
   const updateNews = async () => {
     props.setProgress(10);
     const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
-    console.log('Fetching news from URL:', url);  // Add this line to log the URL
+    console.log('Fetching news from URL:', url);
     setLoading(true);
 
     try {
-      const data = await fetch(url);
-      if (!data.ok) {
-        throw new Error(`HTTP error! status: ${data.status}`);
+      const response = await fetch(url);
+      if (!response.ok) {
+        if (response.status === 426) {
+          throw new Error('HTTP 426: Upgrade Required. Please check your API version or protocol.');
+        } else if (response.status === 404) {
+          throw new Error('HTTP 404: Not Found. The requested resource could not be found.');
+        } else {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
       }
-      const parsedData = await data.json();
 
-      if (parsedData.articles) {
-        setArticles(parsedData.articles);
-        setTotalResults(parsedData.totalResults);
+      const data = await response.json();
+      if (data.articles) {
+        setArticles(data.articles);
+        setTotalResults(data.totalResults);
       } else {
         console.error('No articles found in the response.');
       }
@@ -42,26 +48,32 @@ const News = (props) => {
   };
 
   useEffect(() => {
-    document.title = `${capitalizeFirstLetter(props.category)}`;
+    document.title = `${capitalizeFirstLetter(props.category)} - NewsMonkey`;
     updateNews();
   }, [props.category]);
 
   const fetchMoreData = async () => {
     const nextPage = page + 1;
     const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${nextPage}&pageSize=${props.pageSize}`;
-    console.log('Fetching more news from URL:', url);  // Add this line to log the URL
+    console.log('Fetching more news from URL:', url);
     setPage(nextPage);
 
     try {
-      const data = await fetch(url);
-      if (!data.ok) {
-        throw new Error(`HTTP error! status: ${data.status}`);
+      const response = await fetch(url);
+      if (!response.ok) {
+        if (response.status === 426) {
+          throw new Error('HTTP 426: Upgrade Required. Please check your API version or protocol.');
+        } else if (response.status === 404) {
+          throw new Error('HTTP 404: Not Found. The requested resource could not be found.');
+        } else {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
       }
-      const parsedData = await data.json();
 
-      if (parsedData.articles) {
-        setArticles((prevArticles) => prevArticles.concat(parsedData.articles));
-        setTotalResults(parsedData.totalResults);
+      const data = await response.json();
+      if (data.articles) {
+        setArticles((prevArticles) => prevArticles.concat(data.articles));
+        setTotalResults(data.totalResults);
       } else {
         console.error('No more articles found in the response.');
       }
