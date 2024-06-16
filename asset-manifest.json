@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/NewSphere/static/css/main.dc4d6ff2.css",
+    "main.js": "/NewSphere/static/js/main.7a186a28.js",
+    "static/js/592.d13af28d.chunk.js": "/NewSphere/static/js/592.d13af28d.chunk.js",
+    "static/media/loading.gif": "/NewSphere/static/media/loading.9e90d6e8f73b86c0d1d1.gif",
+    "index.html": "/NewSphere/index.html",
+    "main.dc4d6ff2.css.map": "/NewSphere/static/css/main.dc4d6ff2.css.map",
+    "main.7a186a28.js.map": "/NewSphere/static/js/main.7a186a28.js.map",
+    "592.d13af28d.chunk.js.map": "/NewSphere/static/js/592.d13af28d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.dc4d6ff2.css",
+    "static/js/main.7a186a28.js"
+  ]
+}
