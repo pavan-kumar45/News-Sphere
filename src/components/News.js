@@ -17,6 +17,7 @@ const News = (props) => {
   const updateNews = async () => {
     props.setProgress(10);
     const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
+    console.log('Fetching news from URL:', url);  // Add this line to log the URL
     setLoading(true);
 
     try {
@@ -48,6 +49,7 @@ const News = (props) => {
   const fetchMoreData = async () => {
     const nextPage = page + 1;
     const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${nextPage}&pageSize=${props.pageSize}`;
+    console.log('Fetching more news from URL:', url);  // Add this line to log the URL
     setPage(nextPage);
 
     try {
