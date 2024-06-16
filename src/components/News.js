@@ -20,9 +20,11 @@ const News = (props) => {
     setLoading(true);
 
     try {
-      const data = await fetch(url);
-      const parsedData = await data.json();
-
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} ${response.statusText}`);
+      }
+      const parsedData = await response.json();
       if (parsedData.articles) {
         setArticles(parsedData.articles);
         setTotalResults(parsedData.totalResults);
@@ -46,9 +48,11 @@ const News = (props) => {
     setPage(nextPage);
 
     try {
-      const data = await fetch(url);
-      const parsedData = await data.json();
-
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} ${response.statusText}`);
+      }
+      const parsedData = await response.json();
       if (parsedData.articles) {
         setArticles((prevArticles) => prevArticles.concat(parsedData.articles));
         setTotalResults(parsedData.totalResults);
