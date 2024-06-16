@@ -21,11 +21,16 @@ const News = (props) => {
 
     try {
       const data = await fetch(url);
+      if (!data.ok) {
+        throw new Error(`HTTP error! status: ${data.status}`);
+      }
       const parsedData = await data.json();
 
       if (parsedData.articles) {
         setArticles(parsedData.articles);
         setTotalResults(parsedData.totalResults);
+      } else {
+        console.error('No articles found in the response.');
       }
     } catch (error) {
       console.error('Error fetching the news:', error);
@@ -38,7 +43,7 @@ const News = (props) => {
   useEffect(() => {
     document.title = `${capitalizeFirstLetter(props.category)}`;
     updateNews();
-  }, []);
+  }, [props.category]);
 
   const fetchMoreData = async () => {
     const nextPage = page + 1;
@@ -47,11 +52,16 @@ const News = (props) => {
 
     try {
       const data = await fetch(url);
+      if (!data.ok) {
+        throw new Error(`HTTP error! status: ${data.status}`);
+      }
       const parsedData = await data.json();
 
       if (parsedData.articles) {
         setArticles((prevArticles) => prevArticles.concat(parsedData.articles));
         setTotalResults(parsedData.totalResults);
+      } else {
+        console.error('No more articles found in the response.');
       }
     } catch (error) {
       console.error('Error fetching more news:', error);
